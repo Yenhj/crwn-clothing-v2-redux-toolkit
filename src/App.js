@@ -22,8 +22,12 @@ const App = () => {
       if (user) {
         createUserDocumentFromAuth(user);
       }
-      console.log(setCurrentUser(user));
-      dispatch(setCurrentUser(user));
+      // 마지막(user) 를 넣음으로써 앞 화살표함수를 즉시 호출함
+      // 즉 user를 화살표함수의 인수로 넘김
+      const pickedUser =
+        user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+      console.log(setCurrentUser(pickedUser));
+      dispatch(setCurrentUser(pickedUser));
     });
 
     return unsubscribe;
